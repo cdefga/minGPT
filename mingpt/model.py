@@ -106,7 +106,6 @@ class GPT(nn.Module):
 
         # input embedding stem
         self.tok_emb = nn.Embedding(config.vocab_size, config.n_embd)
-        print(self.tok_emb)
         self.pos_emb = nn.Parameter(torch.zeros(1, config.block_size, config.n_embd))
         self.drop = nn.Dropout(config.embd_pdrop)
         # transformer
@@ -185,9 +184,7 @@ class GPT(nn.Module):
 
         # forward the GPT model
         token_embeddings = self.tok_emb(idx) # each index maps to a (learnable) vector
-        print(token_embeddings.size())
         position_embeddings = self.pos_emb[:, :t, :] # each position maps to a (learnable) vector
-        print(position_embeddings.size())
         x = self.drop(token_embeddings + position_embeddings)
         x = self.blocks(x)
         x = self.ln_f(x)
